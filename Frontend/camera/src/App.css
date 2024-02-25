@@ -1,0 +1,43 @@
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .video-stream {
+    grid-column: span 2;
+  }
+  
+  .video-container {
+    border: 1px solid #ccc;
+  }
+  
+  .video {
+    width: 100%;
+    height: auto;
+  }
+  
+  .captured-images {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .captured-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  
+  .captured-image {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  .captured-image img {
+    max-width: 200px; 
+    max-height: 150px; 
+    width: auto;
+    height: auto;
+  }
+  
+  
