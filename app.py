@@ -8,6 +8,7 @@ import base64
 import threading 
 import numpy as np
 import json
+import datetime
 import time
 import os
 from flask_cors import CORS
@@ -62,7 +63,8 @@ def capture_frame():
         image_data = base64.b64decode(image_64_encode)
         save_path = r'C:\Users\DSI-LPT-006\Desktop\Capture Images'
         os.makedirs(save_path, exist_ok=True)
-        file_path = os.path.join(save_path, f"captured_frame_{int(time.time())}.jpg")
+        current_time = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+        file_path = os.path.join(save_path, f"captured_frame_{current_time}.jpg")
         with open(file_path, "wb") as f:
             f.write(image_data)
         
