@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
 const App = () => {
@@ -28,7 +29,16 @@ const App = () => {
   }, []);
 
   const handleCapture = () => {
-    setCapturedImages([...capturedImages, video]);
+    axios.post('http://localhost:5000/capture_frame',{
+      method: 'POST'
+    })
+    .then(data =>{
+      // console.log(data)
+      // console.log(data['data']);
+      // let new_img = 'data:image/jpeg;base64'+data['data'];
+      setCapturedImages([...capturedImages,data['data']])
+    })
+    .catch(error => console.error('Error capturing frame:', error));
   };
 
   const toggleShowCapturedImages = () => {

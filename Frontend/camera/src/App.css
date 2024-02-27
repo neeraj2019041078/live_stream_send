@@ -9,10 +9,12 @@
     grid-column: span 2;
   }
   
-  .video-container {
-    border: 1px solid #ccc;
+  .video-container img{
+   position: relative;
+   left: 400px;
+    height: 30%;
+    width: 30%
   }
-  
   .video {
     width: 100%;
     height: auto;
