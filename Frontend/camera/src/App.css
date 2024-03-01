@@ -1,5 +1,6 @@
 
   .video-stream h1{
+    margin: 0;
     display: inline-block;
     position: relative;
     left: 44%;
@@ -12,7 +13,7 @@
   }
   .video-container{
     border: 1px solid black;
-    margin-top: 50px;
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -39,24 +40,37 @@
     border: none;
     cursor: pointer;
     width: 17%;
-    top: 7%;
+    top: 2%;
     left: 5%;
   }
   
   .btn:hover {
-    background-color: #333; /* Darken the background color on hover */
+    background-color: #333; 
   }
   .captured-images {
     border: 1px solid #ccc;
     padding: 10px;
+    width: 50%;
+    
   }
-  
+  .captured-images1{
+    width: 50%;
+  }
   .captured-images h1 {
    text-align: center;
+   margin: 0;
+   font-size: 0.5rem;
   }
   
+  .captured-image .captured-image-cam2 img{
+    max-width: 300px;
+    max-height: 150px;
+
+  }
   .captured-images1 h1{
     text-align: center;
+    margin: 0;
+    font-size: 0.5rem;
   }
   .captured-images-grid {
     display: grid;
@@ -64,13 +78,15 @@
     gap: 10px;
   }
   
-  .captured-image {
-    border: 1px solid #ccc;
-    padding: 10px;
+ 
+  .parent{
+    display: flex;
   }
   .captured-image img {
-    max-width: 200px; 
-    max-height: 150px; 
+    left: 33px;
+    position: relative;
+    max-width: 300px;
+    max-height: 150px;
     width: auto;
     height: auto;
   }
@@ -90,7 +106,7 @@
     border: 1px solid #ccc;
     padding: 10px;
   }
-  
+ 
   .captured-image1 img {
     max-width: 200px; 
     max-height: 150px; 
@@ -98,3 +114,6 @@
     height: auto;
   }
   
+  .captured-image h2{
+    margin: 0;
+  }

@@ -1,5 +1,5 @@
 from gevent import pywsgi
-from flask import Flask
+from flask import Flask,jsonify
 from flask_sockets import Sockets
 from geventwebsocket.handler import WebSocketHandler
 import cv2
@@ -51,7 +51,7 @@ class FrameGenerator:
                         print("Camera reconnected.")
                         self.camera_connected = True
                     else:
-                        time.sleep(1) 
+                        time.sleep(0.01)
                 time.sleep(0.01) 
 
         except Exception as e:
@@ -75,7 +75,7 @@ class FrameGenerator:
                         print("Camera Reconnected")
                         self.camera_connected=True
                     else:
-                        time.sleep(1)
+                        time.sleep(0.01)
                     time.sleep(0.01)
         except Exception as e:
              print("Error in generating frame:", e)
@@ -96,18 +96,21 @@ def video_feed_socket(ws):
                 ws.send(result)
         gevent.sleep(0.01)
 
+
+last_captured_images_cam1 = []
+last_captured_images_cam2 = []
+
 @app.route('/capture_frame', methods=['POST'])
 def capture_frame():
     print('capture_frame')
     try:
         frame = frame_generator.curr_frame
-        frame1=frame_generator.curr_frame1
+        frame1 = frame_generator.curr_frame1
         if frame is not None and frame1 is not None:
-          
-            save_dir=r'C:\Users\DSI-LPT-006\Desktop\Data'
+            save_dir = r'C:\Users\DSI-LPT-006\Desktop\Data'
             today_date = datetime.datetime.now().strftime("%d-%m-%Y")
-            cam1_dir = os.path.join(save_dir,'cam1',today_date)
-            cam2_dir = os.path.join(save_dir,'cam2',today_date)
+            cam1_dir = os.path.join(save_dir, 'cam1', today_date)
+            cam2_dir = os.path.join(save_dir, 'cam2', today_date)
          
             os.makedirs(cam1_dir, exist_ok=True)
             os.makedirs(cam2_dir, exist_ok=True)
@@ -125,12 +128,24 @@ def capture_frame():
             _, buffer1 = cv2.imencode('.jpg', frame1)
             encoded_string = base64.b64encode(buffer).decode('utf-8')
             encoded_string1 = base64.b64encode(buffer1).decode('utf-8')
-            
            
-            return json.dumps({'data': encoded_string,'data1':encoded_string1, 'file_path': file_path,'file_path1':file_path1}), 200
-        else:
-            return "Error: No frame available to capture", 500
+            last_captured_images_cam1.append(encoded_string)
+            last_captured_images_cam2.append(encoded_string1)
 
+            
+            if len(last_captured_images_cam1) > 2:
+                last_captured_images_cam1.pop(0)
+            if len(last_captured_images_cam2) > 2:
+                last_captured_images_cam2.pop(0)
+            
+            res = {
+                'cam1': last_captured_images_cam1,
+                'cam2': last_captured_images_cam2
+            }
+           
+            return json.dumps(res), 200
+        else:
+            return "Error: No frame available to capture", 500 
     except Exception as e:
         return str(e), 500
 
